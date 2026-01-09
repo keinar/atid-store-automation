@@ -24,11 +24,13 @@ test.describe('Checkout Flow & Validation', () => {
         const guestDetails = generateGuestDetails();
         await checkoutPage.fillGuestDetails(guestDetails);
 
-        // Optional: as a guest - the filled values are not remains
-        // await cartPage.navigateToCart();
-        // await cartPage.proceedToCheckout();
-        // await checkoutPage.validateFieldValue(checkoutPage.billingFirstName, guestDetails.firstName);
-        // await checkoutPage.validateFieldValue(checkoutPage.billingCity, guestDetails.city);
+        await test.step('Optional: Validate form persistence (Skipped due to AUT limitation)', async () => {
+            // We skip this step programmatically because the site clears guest data on navigation
+            test.info().annotations.push({ 
+                type: 'limitation', 
+                description: 'Guest data is not persisted on navigation in this version of the app' 
+            });
+        });
 
         await cartPage.navigateToCart();
         await cartPage.clearCart();
