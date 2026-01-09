@@ -37,7 +37,7 @@ export class StorePage extends BasePage {
 
                 if (!isOutOfStock) {
                     // Click the main link to navigate to details
-                    await product.locator(this.productLink).first().click();
+                    await this.clickElement(product.locator(this.productLink).first());
                     return;
                 }
             }
@@ -48,7 +48,7 @@ export class StorePage extends BasePage {
     async navigateToProduct(productName: string) {
         await test.step(`Maps to specific product: ${productName}`, async () => {
              const product = this.productList.filter({ hasText: productName }).first();
-             await product.locator(this.productLink).click();
+             await this.clickElement(product.locator(this.productLink));
         });
     }
 }

@@ -1,5 +1,6 @@
 import { Locator, Page, test, expect } from '@playwright/test';
 import { BasePage } from './basePage';
+import { GuestDetails } from '../interfaces/guestDetails.interface';
 
 export class CheckoutPage extends BasePage {
     readonly billingFirstName: Locator;
@@ -35,7 +36,7 @@ export class CheckoutPage extends BasePage {
         this.loadingOverlay = '.blockUI';
     }
 
-    private get fieldMap(): Record<string, Locator> {
+    private get fieldMap(): Record<keyof GuestDetails, Locator> {
         return {
             firstName: this.billingFirstName,
             lastName: this.billingLastName,
@@ -49,33 +50,37 @@ export class CheckoutPage extends BasePage {
         };
     }
 
-    async fillGuestDetails(details: any) {
+    async fillGuestDetails(details: Partial<GuestDetails>) {
         await test.step('Fill Checkout Form', async () => {
             const map = this.fieldMap;
             
             for (const [key, value] of Object.entries(details)) {
-                if (!map[key] || value === undefined || value === null) continue;
+                const fieldName = key as keyof GuestDetails;
+                
+                if (!map[fieldName] || value === undefined || value === null) continue;
 
-                if (key === 'country') {
-                    await map[key].selectOption({ label: value as string });
+                if (fieldName === 'country') {
+                    await map[fieldName].selectOption({ label: value as string });
                 } else {
-                    await this.fillElement(map[key], value as string);
+                    await this.fillElement(map[fieldName], value as string);
                 }
             }
         });
     }
 
-    async validateFormFilled(details: any, fieldsToSkip: string[] = []) {
+    async validateFormFilled(details: Partial<GuestDetails>, fieldsToSkip: (keyof GuestDetails)[] = []) {
         await test.step(`Validate Form Persistence (Skipping: ${fieldsToSkip.join(', ') || 'none'})`, async () => {
             const map = this.fieldMap;
 
             for (const [key, value] of Object.entries(details)) {
-                if (fieldsToSkip.includes(key)) continue;
+                const fieldName = key as keyof GuestDetails;
 
-                const locator = map[key];
+                if (fieldsToSkip.includes(fieldName)) continue;
+
+                const locator = map[fieldName];
                 if (!locator) continue;
 
-                if (key !== 'country') { 
+                if (fieldName !== 'country') { 
                      await expect(locator).toHaveValue(value as string);
                 }
             }
@@ -85,7 +90,7 @@ export class CheckoutPage extends BasePage {
     async submitOrder() {
         await test.step('Click Place Order', async () => {
             await this.page.waitForSelector(this.loadingOverlay, { state: 'detached' });
-            await this.placeOrderBtn.click();
+            await this.clickElement(this.placeOrderBtn);
         });
     }
 

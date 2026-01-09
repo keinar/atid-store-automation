@@ -14,9 +14,9 @@ export abstract class BasePage {
         });
     }
 
-    protected async clickElement(locator: Locator) {
+    protected async clickElement(locator: Locator, options?: { force?: boolean }) {
         await test.step(`Click element: ${locator}`, async () => {
-            await locator.click();
+            await locator.click(options);
         });
     }
 
@@ -32,15 +32,11 @@ export abstract class BasePage {
         });
     }
 
-    protected async validateElementText(locator: Locator, expectedText: string) {
-        await test.step(`Validate the element contains text: ${expectedText}`, async () => {
-            await expect(locator).toContainText(expectedText);
-        });
-    }
-
     protected parsePrice(priceText: string): number {
-        const numbers = priceText.replace(/[^0-9.]/g, '');
-        return numbers ? parseFloat(numbers) : 0;
+        const cleanText = priceText.replace(/,/g, '');
+        const matches = cleanText.match(/(\d+(?:\.\d+)?)/g);
+        if (!matches || matches.length === 0) return 0;
+        return parseFloat(matches[matches.length - 1]);
     }
 
 }

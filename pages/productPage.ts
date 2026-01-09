@@ -33,9 +33,9 @@ export class ProductPage extends BasePage {
 
     async addToCartAndGoToCart() {
         await test.step('Add to cart and navigate to Cart page', async () => {
-            await this.addToCartButton.click();
+            await this.clickElement(this.addToCartButton)
             await expect(this.successMessage).toBeVisible();
-            await this.viewCartLink.click();
+            await this.clickElement(this.viewCartLink);
         });
     }
 

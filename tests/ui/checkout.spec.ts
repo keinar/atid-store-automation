@@ -15,6 +15,10 @@ test.describe('Checkout Flow & Validation', () => {
         await cartPage.validateCartItem(productName, PRODUCT_DATA.DEFAULT_QUANTITY);
         await cartPage.selectShippingMethod('Local pickup')
         await cartPage.validateTotalsMath();
+        await cartPage.selectShippingMethod('Delivery Express')
+        await cartPage.validateTotalsMath();
+        await cartPage.selectShippingMethod('Registered Mail')
+        await cartPage.validateTotalsMath();
         await cartPage.proceedToCheckout();
 
         const guestDetails = generateGuestDetails();

@@ -35,6 +35,7 @@ This project automates critical user journeys for an e-commerce platform (`atid.
 ├── src
 │   ├── consts      # Static data (Products, URLs)
 │   ├── fixtures    # Playwright Fixtures (Dependency Injection for Pages)
+│   ├── interfaces  # TypeScript Interfaces (e.g. GuestDetails)
 │   ├── pages       # Page Object Models (The application mapping)
 │   └── utils       # Utilities (Data Factory, Helpers)
 ├── tests
@@ -119,9 +120,9 @@ npm run allure:open
 
 ## Test Scenarios Covered
 
-1. **Guest Checkout Journey:** Verifies the full flow from catalog to cart, including quantity updates, shipping calculations, and form filling.
-2. **Form Validation:** Ensures required fields are enforced and validates that user input is preserved during validation errors.
-3. **Session Isolation:** verify that "Out of Stock" items cannot be added and that carts are isolated between different browser contexts (users).
+1. **Guest Checkout Journey:** Verifies the full flow from catalog to cart, including dynamic product selection, quantity updates, shipping method changes (AJAX handling), totals calculation, and form filling.
+2. **Form Validation:** Ensures required fields are enforced and validates that user input is preserved during validation errors (Negative Testing).
+3. **Session Isolation:** Verifies that "Out of Stock" items cannot be added and that shopping carts are isolated between different browser contexts (simulating distinct users).
 
 ---
 

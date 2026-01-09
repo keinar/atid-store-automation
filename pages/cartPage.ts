@@ -44,7 +44,7 @@ export class CartPage extends BasePage {
 
     async selectShippingMethod(methodName: string) {
         await test.step(`Select shipping method: ${methodName}`, async () => {
-            await this.shippingLabel.filter({ hasText: methodName }).click();
+            await this.clickElement(this.shippingLabel.filter({ hasText: methodName }),{ force: true })
             await this.page.waitForSelector(this.loadingOverlay, { state: 'detached' });
         });
     }
@@ -67,7 +67,7 @@ export class CartPage extends BasePage {
 
     async proceedToCheckout() {
         await test.step('Proceed to Checkout', async () => {
-            await this.proceedToCheckoutBtn.click();
+            await this.clickElement(this.proceedToCheckoutBtn)
         });
     }
 
@@ -77,7 +77,7 @@ export class CartPage extends BasePage {
             if (await this.emptyCartMessage.isVisible()) return;
 
             while (await this.removeIcon.count() > 0) {
-                await this.removeIcon.first().click();
+                await this.clickElement(this.removeIcon.first())
                 await this.page.waitForSelector(this.loadingOverlay, { state: 'detached' });
             }
             await expect(this.emptyCartMessage).toBeVisible();
