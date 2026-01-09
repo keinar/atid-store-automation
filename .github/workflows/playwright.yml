@@ -33,12 +33,6 @@ jobs:
     - name: Install Allure Commandline
       run: npm install -g allure-commandline
 
-    - name: Start Mock Server
-      run: |
-        npm run api &
-        echo "Waiting for Mock Server..."
-        npx wait-on http://localhost:3000 --timeout 10000
-
     - name: Run Playwright tests
       run: npx playwright test
 
