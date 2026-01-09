@@ -1,0 +1,32 @@
+{
+  "name": "atid-store-automation",
+  "version": "1.0.0",
+  "description": "Automated E2E tests for atid.store using Playwright and TypeScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "allure:generate": "allure generate allure-results --clean -o allure-report",
+    "allure:open": "allure open allure-report",
+    "lint": "eslint ."
+  },
+  "keywords": [
+    "playwright",
+    "typescript",
+    "automation",
+    "testing"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@faker-js/faker": "^10.2.0",
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^24.10.0",
+    "allure-playwright": "^3.4.4",
+    "dotenv": "^17.2.3"
+  },
+  "dependencies": {
+    "playwright": "^1.57.0"
+  }
+}
