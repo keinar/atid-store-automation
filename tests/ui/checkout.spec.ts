@@ -13,6 +13,7 @@ test.describe('Checkout Flow & Validation', () => {
         await productPage.addToCartAndGoToCart();
 
         await cartPage.validateCartItem(productName, PRODUCT_DATA.DEFAULT_QUANTITY);
+        await cartPage.selectShippingMethod('Local pickup')
         await cartPage.validateTotalsMath();
         await cartPage.proceedToCheckout();
 
